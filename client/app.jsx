@@ -1,8 +1,14 @@
 import React from 'react';
-import Home from './pages/home';
+import NavBar from './components/nav-bar';
+import ViewMemes from './pages/viewmemes';
 
 export default class App extends React.Component {
   render() {
-    return <Home />;
+    return (
+      <div className="container">
+        <NavBar />
+        <ViewMemes />
+      </div>
+    );
   }
 }

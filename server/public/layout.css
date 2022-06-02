@@ -1,0 +1,40 @@
+.row {
+  display: flex;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-left {
+  justify-content: left;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.col-full {
+  width: 100%;
+}
+
+.col-third {
+  flex-basis: calc(100% / 3);
+}
+
+.col-two-thirds {
+  flex-basis: calc(100% * 2/3);
+}
+
+.row-height-80 {
+  height: 80vh;
+}
