@@ -1,30 +1,91 @@
 import React from 'react';
 
-export default function MemesPage(props) {
-  return (
+export default class MemesPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: [],
+      entries: [],
+      activeIndex: 0
+    };
+    this.nextImage = this.nextImage.bind(this);
+    this.previousImage = this.previousImage.bind(this);
+  }
+
+  componentDidMount() {
+    fetch('/api/entries')
+      .then(response => response.json())
+      .then(data => this.setState({ entries: data }));
+  }
+
+  nextImage() {
+    let activeIndex = this.state.activeIndex + 1;
+
+    if (activeIndex >= this.state.entries.length) {
+      activeIndex = 0;
+    }
+
+    this.setState({ activeIndex });
+  }
+
+  previousImage() {
+    let activeIndex = this.state.activeIndex - 1;
+
+    if (activeIndex < 0) {
+      activeIndex = this.state.entries.length - 1;
+    }
+    this.setState({ activeIndex });
+  }
+
+  render() {
+    const activeIndex = this.state.activeIndex;
+    const entries = this.state.entries;
+
+    let imageUrl = '';
+
+    if (entries[activeIndex]) {
+      imageUrl = entries[activeIndex].entryUrl;
+    }
+
+    return (
     <div>
       <div className='row'>
-        <div className='col-third'>
-          <div className='comment-box-container'>
-            <div className='comment-box'></div>
-          </div>
+        <div className='col-third row align-center justify-center comment-box-height'>
+          <div className='comment-box'></div>
         </div>
-        <div className='column col-two-thirds'>
+        <div className='column col-third'>
           <div className='col-full'>
             <div className='row justify-left'>
               <img className='profile-img' src='https://www.denofgeek.com/wp-content/uploads/2021/03/Godzilla.jpg?resize=768%2C432' />
               <p className='light-grey profile-name'>Coolguy55</p>
             </div>
           </div>
-          <div className='img-container'>
-            <img className='meme-img' src='https://i.kym-cdn.com/photos/images/masonry/002/323/183/9dd.jpg' />
+          <div className='col-full row justify-center'>
+            <div className='img-container'>
+              <img className='meme-img' src={imageUrl} />
+            </div>
           </div>
-          <div>
-            <img className='like-dislike' src='/images/thumbs-up-empty.png' alt='thumbs up' />
-            <img className='like-dislike' src='/images/thumbs-down-empty.png' alt='thumbs down' />
+          <div className='row'>
+            <div className='col-half row align-center'>
+              <img className='like-dislike' src='/images/thumbs-up-empty.png' alt='thumbs up' />
+              <h1 className='like-dislike-count'>0</h1>
+            </div>
+            <div className='col-half row align-center'>
+              <img className='like-dislike' src='/images/thumbs-down-empty.png' alt='thumbs down' />
+              <h1 className='like-dislike-count'>0</h1>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col-half row justify-left'>
+              <i className="fas fa-chevron-left light-grey arrow" onClick={this.previousImage}></i>
+            </div>
+            <div className='col-half row justify-right'>
+              <i className="fas fa-chevron-right light-grey arrow" onClick={this.nextImage}></i>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  );
+    );
+  }
 }

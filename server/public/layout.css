@@ -15,6 +15,10 @@
   justify-content: left;
 }
 
+.justify-right {
+  justify-content: right;
+}
+
 .align-center {
   align-items: center;
 }
@@ -25,6 +29,10 @@
 
 .col-full {
   width: 100%;
+}
+
+.col-half {
+  width: 50%;
 }
 
 .col-third {

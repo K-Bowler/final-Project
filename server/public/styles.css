@@ -36,16 +36,28 @@
   font-size: 18px;
 }
 
-.comment-box-container {
-  max-width: 80%;
-  max-height: 85vh;
-  margin: auto;
+.comment-box-height {
+  height: 90vh;
 }
 
 .comment-box {
+  width: 80%;
+  height: 80vh;
+  border-radius: 5px;
   background-color: #444;
 }
 
 .like-dislike {
-  width: 50px;
+  width: 40px;
+  margin: 0 20px 0 60px;
+}
+
+.like-dislike-count {
+  display: inline;
+  color: #d6d6d6;
+}
+
+.arrow {
+  font-size: 40px;
+  margin: 10px 0 0;
 }
