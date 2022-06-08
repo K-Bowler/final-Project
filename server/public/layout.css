@@ -1,0 +1,88 @@
+.hidden {
+  display: none;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-left {
+  justify-content: left;
+}
+
+.justify-right {
+  justify-content: right;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.col-full {
+  width: 100%;
+}
+
+.col-half {
+  width: 50%;
+}
+
+.col-third {
+  flex-basis: calc(100% / 3);
+}
+
+.col-fourth {
+  flex-basis: calc(100% / 4);
+}
+
+.col-sixth {
+  flex-basis: calc(100% / 6);
+}
+
+.col-two-thirds {
+  flex-basis: calc(100% * 2/3);
+}
+
+.col-two-sixths {
+  flex-basis: calc(100% * 2/6);
+}
+
+.row-height-80 {
+  height: 80vh;
+}
+
+@media only screen and (max-width: 600px) {
+  .col-full-col-third {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .col-full-col-third {
+    flex-basis: calc(100% / 3);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .phone-hidden {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .desktop-hidden {
+    display: none;
+  }
+}

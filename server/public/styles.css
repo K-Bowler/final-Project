@@ -1,0 +1,114 @@
+.light-grey {
+  color: #d6d6d6;
+}
+
+.dark-grey {
+  color: #444;
+}
+
+.nav-bar {
+  width: 98%;
+  height: 3px;
+  background-color: #d6d6d6;
+  border-radius: 5px;
+}
+
+.img-container {
+  width: 382.66px;
+  height: 382.66px;
+  border: 3px solid #d6d6d6;
+  border-radius: 5px;
+}
+
+.meme-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.profile-img {
+  width: 50px;
+  height: 50px;
+  border: 3px solid #d6d6d6;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 20px 0 10px;
+}
+
+.profile-name {
+  margin: 34px 5px 0;
+  font-size: 18px;
+}
+
+.comment-box-height {
+  height: 90vh;
+}
+
+.comment-box {
+  width: 80%;
+  height: 80vh;
+  border-radius: 5px;
+  background-color: #444;
+}
+
+.like-dislike {
+  width: 40px;
+  margin: 0 20px 0 60px;
+}
+
+.like-dislike-count {
+  display: inline;
+  color: #d6d6d6;
+}
+
+.phone-like-dislike {
+  width: 40px;
+}
+
+.arrow {
+  font-size: 40px;
+  margin: 10px 0 0;
+}
+
+.hamberger-background {
+  position: absolute;
+  background: #0000007a;
+  width: 100%;
+  text-align: center;
+  height: 100%;
+}
+
+.hamberger {
+  background-color: #d6d6d6;
+  width: 50%;
+  margin: auto;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.no-decoration {
+  text-decoration: none;
+}
+
+.menu-divider {
+  height: 3px;
+  width: 98%;
+  background-color: #444;
+  border-radius: 5px;
+}
+
+.nav-arrow {
+  font-size: 25px;
+  margin: 0 0 0 5px;
+}
+
+.phone-comment-background {
+  height: 9.75vh;
+  background-color: #444;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.react-bar {
+  margin: 10px;
+}
