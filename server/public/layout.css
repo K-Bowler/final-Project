@@ -43,8 +43,20 @@
   flex-basis: calc(100% / 3);
 }
 
+.col-fourth {
+  flex-basis: calc(100% / 4);
+}
+
+.col-sixth {
+  flex-basis: calc(100% / 6);
+}
+
 .col-two-thirds {
   flex-basis: calc(100% * 2/3);
+}
+
+.col-two-sixths {
+  flex-basis: calc(100% * 2/6);
 }
 
 .row-height-80 {

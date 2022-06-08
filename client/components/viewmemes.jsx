@@ -65,22 +65,53 @@ export default class MemesPage extends React.Component {
               <img className='meme-img' src={imageUrl} />
             </div>
           </div>
-          <div className='row'>
-            <div className='col-half row align-center'>
-              <img className='like-dislike' src='/images/thumbs-up-empty.png' alt='thumbs up' />
-              <h1 className='like-dislike-count'>0</h1>
+          <div className='phone-hidden'>
+            <div className='row'>
+              <div className='col-half row align-center'>
+                <img className='like-dislike' src='/images/thumbs-up-empty.png' alt='thumbs up' />
+                <h1 className='like-dislike-count'>0</h1>
+              </div>
+              <div className='col-half row align-center'>
+                <img className='like-dislike' src='/images/thumbs-down-empty.png' alt='thumbs down' />
+                <h1 className='like-dislike-count'>0</h1>
+              </div>
             </div>
-            <div className='col-half row align-center'>
-              <img className='like-dislike' src='/images/thumbs-down-empty.png' alt='thumbs down' />
-              <h1 className='like-dislike-count'>0</h1>
+            <div className='row'>
+              <div className='col-half row justify-left'>
+                <i className="fas fa-chevron-left light-grey arrow" onClick={this.previousImage}></i>
+              </div>
+              <div className='col-half row justify-right'>
+                <i className="fas fa-chevron-right light-grey arrow" onClick={this.nextImage}></i>
+              </div>
             </div>
           </div>
-          <div className='row'>
-            <div className='col-half row justify-left'>
-              <i className="fas fa-chevron-left light-grey arrow" onClick={this.previousImage}></i>
+          <div className='desktop-hidden'>
+            <div className='row react-bar'>
+                <div className='col-sixth row justify-left'>
+                  <i className="fas fa-chevron-left light-grey arrow" onClick={this.previousImage}></i>
+                </div>
+                <div className='col-sixth row align-center justify-right'>
+                  <img className='phone-like-dislike' src='/images/thumbs-up-empty.png' alt='thumbs up' />
+                </div>
+                <div className='col-sixth row align-center justify-center'>
+                  <h1 className='like-dislike-count'>0</h1>
+                </div>
+                <div className='col-sixth row align-center justify-right'>
+                  <img className='phone-like-dislike' src='/images/thumbs-down-empty.png' alt='thumbs down' />
+                </div>
+                <div className='col-sixth row align-center justify-center'>
+                  <h1 className='like-dislike-count'>0</h1>
+                </div>
+                <div className='col-sixth row justify-right'>
+                  <i className="fas fa-chevron-right light-grey arrow" onClick={this.nextImage}></i>
+                </div>
             </div>
-            <div className='col-half row justify-right'>
-              <i className="fas fa-chevron-right light-grey arrow" onClick={this.nextImage}></i>
+          </div>
+          <div className='desktop-hidden'>
+            <div className='row'>
+              <div className='col-full'>
+                <div className='phone-comment-background'></div>
+              </div>
             </div>
           </div>
         </div>

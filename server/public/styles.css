@@ -61,6 +61,10 @@
   color: #d6d6d6;
 }
 
+.phone-like-dislike {
+  width: 40px;
+}
+
 .arrow {
   font-size: 40px;
   margin: 10px 0 0;
@@ -96,4 +100,15 @@
 .nav-arrow {
   font-size: 25px;
   margin: 0 0 0 5px;
+}
+
+.phone-comment-background {
+  height: 9.75vh;
+  background-color: #444;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.react-bar {
+  margin: 10px;
 }
