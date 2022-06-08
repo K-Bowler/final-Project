@@ -1,3 +1,7 @@
+.hidden {
+  display: none;
+}
+
 .row {
   display: flex;
 }
@@ -45,4 +49,28 @@
 
 .row-height-80 {
   height: 80vh;
+}
+
+@media only screen and (max-width: 600px) {
+  .col-full-col-third {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .col-full-col-third {
+    flex-basis: calc(100% / 3);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .phone-hidden {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .desktop-hidden {
+    display: none;
+  }
 }
