@@ -31,7 +31,7 @@ export default class NavBar extends React.Component {
             <i onClick={this.handleClick} className="fas fa-chevron-down light-grey nav-arrow desktop-hidden"></i>
         </div>
           <div id='memes' className='col-full-col-third row justify-center align-center phone-hidden'>
-            <h1> <a onClick={this.handleClick} className='light-grey no-decoration' href="#memes"> MEMES </a></h1>
+            <h1> <a onClick={this.handleClick} className='light-grey no-decoration' href="#"> MEMES </a></h1>
             <i onClick={this.handleClick} className="fas fa-chevron-down light-grey nav-arrow desktop-hidden"></i>
         </div>
           <div id='profile' className='col-full-col-third phone-hidden align-center'>
@@ -39,7 +39,7 @@ export default class NavBar extends React.Component {
             <i onClick={this.handleClick} className="fas fa-chevron-down light-grey nav-arrow desktop-hidden"></i>
         </div>
         <div id='memes' className='col-full-col-third row justify-center align-center desktop-hidden'>
-          <h1> <a onClick={this.handleClick} className='light-grey no-decoration' href="#memes"> {this.state.route} </a></h1>
+          <h1> <a onClick={this.handleClick} className='light-grey no-decoration' href="#"> {this.state.route} </a></h1>
           <i onClick={this.handleClick} className="fas fa-chevron-down light-grey nav-arrow desktop-hidden"></i>
         </div>
       </div>

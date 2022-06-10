@@ -1,5 +1,5 @@
 import React from 'react';
-import MemesPage from '../components/viewmemes';
+import MemesPage from '../components/view-memes';
 
 export default function ViewMemes(props) {
   return (

@@ -13,6 +13,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(require('./dev-middleware')(publicPath));
 }
 
+app.use(express.json());
 app.use(express.static(publicPath));
 
 app.get('/api/entries', (req, res, next) => {
@@ -51,6 +52,36 @@ app.get('/api/entries/:entryId', (req, res, next) => {
       res.json(result.rows[0]);
     })
     .catch(err => next(err));
+});
+
+app.post('/api/entries', (req, res, next) => {
+  const userId = 1;
+  const entryUrl = req.body.entryUrl;
+
+  if (!entryUrl) {
+    res.status(400).json({
+      error: 'Missing \'entryUrl\' information.'
+    });
+  }
+
+  const sql = `
+  insert into "entries" ("entryUrl", "userId")
+    values ($1, $2)
+    returning *
+  `;
+  const params = [entryUrl, userId];
+  db.query(sql, params)
+    .then(result => {
+      const newEntry = result.rows[0];
+      res.status(201).json(newEntry);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+
 });
 
 app.use(errorMiddleware);
