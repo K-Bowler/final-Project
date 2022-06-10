@@ -4,16 +4,38 @@ export default class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      menuOpen: false,
-      route: 'MEMES',
-      dropOption1: 'CREATE',
-      dropOption2: 'PROFILE'
+      menuOpen: false
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
     this.setState({ menuOpen: !this.state.menuOpen });
+  }
+
+  getMenu() {
+    const { path } = this.props;
+    const menu = {
+      first: '',
+      second: '',
+      third: ''
+    };
+
+    if (path === '') {
+      menu.first = { text: 'MEMES', path: '#' };
+      menu.second = { text: 'CREATE', path: '#create' };
+      menu.third = { text: 'PROFILE', path: '#profile' };
+    } else if (path === 'create') {
+      menu.first = { text: 'CREATE', path: '#create' };
+      menu.second = { text: 'MEMES', path: '#' };
+      menu.third = { text: 'PROFILE', path: '#profile' };
+    } else if (path === 'profile') {
+      menu.first = { text: 'PROFILE', path: '#profile' };
+      menu.second = { text: 'MEMES', path: '#' };
+      menu.third = { text: 'CREATE', path: '#create' };
+    }
+
+    return menu;
   }
 
   render() {
@@ -23,23 +45,25 @@ export default class NavBar extends React.Component {
       menuClass = 'phone-hidden';
     }
 
+    const menu = this.getMenu();
+
     return (
     <div>
       <div className='row text-center justify-center align-center'>
-          <div id='create' className='col-full-col-third phone-hidden'>
-            <h1> <a onClick={this.handleClick} className='light-grey no-decoration' href="#create"> CREATE </a></h1>
-            <i onClick={this.handleClick} className="fas fa-chevron-down light-grey nav-arrow desktop-hidden"></i>
+        <div id='create' className='col-full-col-third phone-hidden'>
+          <h1> <a onClick={this.handleClick} className='light-grey no-decoration' href="#create"> CREATE </a></h1>
+          <i onClick={this.handleClick} className="fas fa-chevron-down light-grey nav-arrow desktop-hidden"></i>
         </div>
-          <div id='memes' className='col-full-col-third row justify-center align-center phone-hidden'>
-            <h1> <a onClick={this.handleClick} className='light-grey no-decoration' href="#"> MEMES </a></h1>
-            <i onClick={this.handleClick} className="fas fa-chevron-down light-grey nav-arrow desktop-hidden"></i>
+        <div id='memes' className='col-full-col-third row justify-center align-center phone-hidden'>
+          <h1> <a onClick={this.handleClick} className='light-grey no-decoration' href="#"> MEMES </a></h1>
+          <i onClick={this.handleClick} className="fas fa-chevron-down light-grey nav-arrow desktop-hidden"></i>
         </div>
-          <div id='profile' className='col-full-col-third phone-hidden align-center'>
-            <h1> <a onClick={this.handleClick} className='light-grey no-decoration' href="#profile"> PROFILE </a></h1>
-            <i onClick={this.handleClick} className="fas fa-chevron-down light-grey nav-arrow desktop-hidden"></i>
+        <div id='profile' className='col-full-col-third phone-hidden align-center'>
+          <h1> <a onClick={this.handleClick} className='light-grey no-decoration' href="#profile"> PROFILE </a></h1>
+          <i onClick={this.handleClick} className="fas fa-chevron-down light-grey nav-arrow desktop-hidden"></i>
         </div>
         <div id='memes' className='col-full-col-third row justify-center align-center desktop-hidden'>
-          <h1> <a onClick={this.handleClick} className='light-grey no-decoration' href="#"> {this.state.route} </a></h1>
+          <h1> <a onClick={this.handleClick} className='light-grey no-decoration' href={menu.first.path}> {menu.first.text} </a></h1>
           <i onClick={this.handleClick} className="fas fa-chevron-down light-grey nav-arrow desktop-hidden"></i>
         </div>
       </div>
@@ -50,7 +74,7 @@ export default class NavBar extends React.Component {
         <div className='hamberger'>
           <div className='row'>
             <div className='col-full'>
-                <h1><a onClick={this.handleClick} className='dark-grey no-decoration' href="#create">{this.state.dropOption1}</a></h1>
+                <h1><a onClick={this.handleClick} className='dark-grey no-decoration' href={menu.second.path}>{menu.second.text}</a></h1>
             </div>
           </div>
           <div className='row'>
@@ -60,7 +84,7 @@ export default class NavBar extends React.Component {
           </div>
           <div className='row'>
             <div className='col-full'>
-                <h1> <a onClick={this.handleClick} className='dark-grey no-decoration' href="#profile">{this.state.dropOption2}</a></h1>
+                <h1> <a onClick={this.handleClick} className='dark-grey no-decoration' href={menu.third.path}>{menu.third.text}</a></h1>
             </div>
           </div>
         </div>

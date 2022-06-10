@@ -31,7 +31,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <NavBar />
+        <NavBar path={this.state.route.path} />
         {this.renderPage()}
       </div>
     );

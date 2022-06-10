@@ -17,6 +17,9 @@ export default class PostMemes extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    if (this.state.entryUrl === '') {
+      return;
+    }
     const newEntry = {
       entryUrl: this.state.entryUrl
     };
@@ -32,9 +35,7 @@ export default class PostMemes extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        const entriesCopy = this.state.entries.slice();
-        entriesCopy.push(data);
-        this.setState({ todos: entriesCopy });
+        location.hash = '';
       });
   }
 
@@ -52,22 +53,22 @@ export default class PostMemes extends React.Component {
 
     return (
       <div>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <div className='row'>
             <div className='col-third phone-hidden'>
               <div className='row'>
                 <div className='col-full row justify-center'>
-                  <button className='wip edit-entry-btns edit-entry-top-btn-margin'>ADD TEXT</button>
+                  <button type='button' className='wip edit-entry-btns edit-entry-top-btn-margin'>ADD TEXT</button>
                 </div>
               </div>
               <div className='row'>
                 <div className='col-full row justify-center'>
-                  <button className='wip edit-entry-btns'>FILTER</button>
+                  <button type='button' className='wip edit-entry-btns'>FILTER</button>
                 </div>
               </div>
               <div className='row'>
                 <div className='col-full row justify-center'>
-                  <button className='wip edit-entry-btns'>RESET</button>
+                  <button type='button' className='wip edit-entry-btns'>RESET</button>
                 </div>
               </div>
               <div className='row'>
@@ -97,7 +98,7 @@ export default class PostMemes extends React.Component {
               </div>
               <div className='row'>
                 <div className='col-full row justify-center'>
-                  <span className='insert-url-text light-grey'>Select a file from divice or insert url</span>
+                  <span className='insert-url-text light-grey'>Select a file from device or insert url</span>
                 </div>
               </div>
               <div className='row desktop-hidden'>
