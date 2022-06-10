@@ -6,10 +6,13 @@ export default class MemesPage extends React.Component {
     this.state = {
       users: [],
       entries: [],
-      activeIndex: 0
+      activeIndex: 0,
+      likeButton: '/images/thumbs-up-empty.png',
+      dislikeButton: '/images/thumbs-down-empty.png'
     };
     this.nextImage = this.nextImage.bind(this);
     this.previousImage = this.previousImage.bind(this);
+    this.likeDislike = this.likeDislike.bind(this);
   }
 
   componentDidMount() {
@@ -37,9 +40,27 @@ export default class MemesPage extends React.Component {
     this.setState({ activeIndex });
   }
 
+  likeDislike() {
+    let likeButton = '/images/thumbs-up-empty.png';
+    let dislikeButton = '/images/thumbs-down-empty.png';
+    if (!likeButton) {
+      likeButton = '/images/thumbs-up-full.png';
+    } else {
+      likeButton = '/images/thumbs-up-empty.png';
+    }
+    if (!dislikeButton) {
+      dislikeButton = '/images/thumbs-down-full.png';
+    } else {
+      dislikeButton = '/images/thumbs-down-empty.png';
+    }
+    this.setState({ likeButton, dislikeButton });
+  }
+
   render() {
     const activeIndex = this.state.activeIndex;
     const entries = this.state.entries;
+    const likeButton = this.state.likeButton;
+    const dislikeButton = this.state.dislikeButton;
 
     let imageUrl = '';
 
@@ -68,11 +89,11 @@ export default class MemesPage extends React.Component {
           <div className='phone-hidden'>
             <div className='row'>
               <div className='col-half row align-center'>
-                <img className='like-dislike' src='/images/thumbs-up-empty.png' alt='thumbs up' />
+                <img className='like-dislike' onClick={this.likeDislike} src={likeButton} alt='thumbs up' />
                 <h1 className='like-dislike-count'>0</h1>
               </div>
               <div className='col-half row align-center'>
-                <img className='like-dislike' src='/images/thumbs-down-empty.png' alt='thumbs down' />
+                <img className='like-dislike' onClick={this.likeDislike} src={dislikeButton} alt='thumbs down' />
                 <h1 className='like-dislike-count'>0</h1>
               </div>
             </div>
@@ -87,24 +108,24 @@ export default class MemesPage extends React.Component {
           </div>
           <div className='desktop-hidden'>
             <div className='row react-bar'>
-                <div className='col-sixth row justify-left'>
-                  <i className="fas fa-chevron-left light-grey arrow" onClick={this.previousImage}></i>
-                </div>
-                <div className='col-sixth row align-center justify-right'>
-                  <img className='phone-like-dislike' src='/images/thumbs-up-empty.png' alt='thumbs up' />
-                </div>
-                <div className='col-sixth row align-center justify-center'>
-                  <h1 className='like-dislike-count'>0</h1>
-                </div>
-                <div className='col-sixth row align-center justify-right'>
-                  <img className='phone-like-dislike' src='/images/thumbs-down-empty.png' alt='thumbs down' />
-                </div>
-                <div className='col-sixth row align-center justify-center'>
-                  <h1 className='like-dislike-count'>0</h1>
-                </div>
-                <div className='col-sixth row justify-right'>
-                  <i className="fas fa-chevron-right light-grey arrow" onClick={this.nextImage}></i>
-                </div>
+              <div className='col-sixth row justify-left'>
+                <i className="fas fa-chevron-left light-grey arrow" onClick={this.previousImage}></i>
+              </div>
+              <div className='col-sixth row align-center justify-right'>
+                <img className='phone-like-dislike' src='/images/thumbs-up-empty.png' alt='thumbs up' />
+              </div>
+              <div className='col-sixth row align-center justify-center'>
+                <h1 className='like-dislike-count'>0</h1>
+              </div>
+              <div className='col-sixth row align-center justify-right'>
+                <img className='phone-like-dislike' src='/images/thumbs-down-empty.png' alt='thumbs down' />
+              </div>
+              <div className='col-sixth row align-center justify-center'>
+                <h1 className='like-dislike-count'>0</h1>
+              </div>
+              <div className='col-sixth row justify-right'>
+                <i className="fas fa-chevron-right light-grey arrow" onClick={this.nextImage}></i>
+              </div>
             </div>
           </div>
           <div className='desktop-hidden'>
