@@ -7,12 +7,13 @@ export default class MemesPage extends React.Component {
       users: [],
       entries: [],
       activeIndex: 0,
-      likeButton: '/images/thumbs-up-empty.png',
-      dislikeButton: '/images/thumbs-down-empty.png'
+      likeCount: 0,
+      dislikeCount: 0
     };
     this.nextImage = this.nextImage.bind(this);
     this.previousImage = this.previousImage.bind(this);
-    this.likeDislike = this.likeDislike.bind(this);
+    this.handleLike = this.handleLike.bind(this);
+    // this.activateDislikeButton = this.activateDislikeButton.bind(this);
   }
 
   componentDidMount() {
@@ -40,32 +41,75 @@ export default class MemesPage extends React.Component {
     this.setState({ activeIndex });
   }
 
-  likeDislike() {
-    let likeButton = '/images/thumbs-up-empty.png';
-    let dislikeButton = '/images/thumbs-down-empty.png';
-    if (!likeButton) {
-      likeButton = '/images/thumbs-up-full.png';
-    } else {
-      likeButton = '/images/thumbs-up-empty.png';
-    }
-    if (!dislikeButton) {
-      dislikeButton = '/images/thumbs-down-full.png';
-    } else {
-      dislikeButton = '/images/thumbs-down-empty.png';
-    }
-    this.setState({ likeButton, dislikeButton });
+  handleLike(like, dislike) {
+    const { activeIndex, entries } = this.state;
+    const tempMeme = entries[activeIndex];
+
+    if (!tempMeme) return;
+
+    const meme = { ...tempMeme };
+    const { entryId } = meme;
+
+    const request = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        isLiked: like,
+        isDisliked: dislike
+      })
+    };
+
+    fetch(`/api/likesDislikes/${entryId}`, request)
+      .then(res => res.json())
+      .then(data => {
+        if (data.isLiked && !meme.userLiked) {
+          meme.likes++;
+          if (meme.userDisliked) {
+            meme.dislikes--;
+          }
+        } else if (data.isDisliked && !meme.userDisliked) {
+          meme.dislikes++;
+          if (meme.userLiked) {
+            meme.likes--;
+          }
+        }
+        meme.userLiked = data.isLiked;
+        meme.userDisliked = data.isDisliked;
+
+        const updatedEntries = entries.map(m => {
+          if (m.entryId === data.entryId) {
+            return meme;
+          }
+          return m;
+        });
+
+        this.setState({ entries: updatedEntries });
+      });
+
   }
 
   render() {
     const activeIndex = this.state.activeIndex;
     const entries = this.state.entries;
-    const likeButton = this.state.likeButton;
-    const dislikeButton = this.state.dislikeButton;
-
+    const meme = entries[activeIndex];
     let imageUrl = '';
+    let likes = 0;
+    let dislikes = 0;
+    let likeBtn = 'thumbs-up-empty.png';
+    let dislikeBtn = 'thumbs-down-empty.png';
 
-    if (entries[activeIndex]) {
-      imageUrl = entries[activeIndex].entryUrl;
+    if (meme) {
+      imageUrl = meme.entryUrl;
+      likes = meme.likes;
+      dislikes = meme.dislikes;
+
+      if (meme.userLiked) {
+        likeBtn = 'thumbs-up-full.png';
+      } else if (meme.userDisliked) {
+        dislikeBtn = 'thumbs-down-full.png';
+      }
     }
 
     return (
@@ -88,13 +132,13 @@ export default class MemesPage extends React.Component {
           </div>
           <div className='phone-hidden'>
             <div className='row'>
-              <div className='col-half row align-center'>
-                <img className='like-dislike' onClick={this.likeDislike} src={likeButton} alt='thumbs up' />
-                <h1 className='like-dislike-count'>0</h1>
+              <div className='col-half row align-center justify-center'>
+                <img className='like-dislike' onClick={() => this.handleLike(true, false)} src={`/images/${likeBtn}`} alt='thumbs up' />
+                <h1 className='like-dislike-count'> {likes} </h1>
               </div>
               <div className='col-half row align-center'>
-                <img className='like-dislike' onClick={this.likeDislike} src={dislikeButton} alt='thumbs down' />
-                <h1 className='like-dislike-count'>0</h1>
+                <img className='like-dislike' onClick={() => this.handleLike(false, true)} src={`/images/${dislikeBtn}`} alt='thumbs down' />
+                <h1 className='like-dislike-count'> {dislikes} </h1>
               </div>
             </div>
             <div className='row'>

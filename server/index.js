@@ -19,9 +19,15 @@ app.use(express.static(publicPath));
 app.get('/api/entries', (req, res, next) => {
   const sql = `
     select "entryId",
-           "userId",
-           "entryUrl"
-      from "entries"
+      e."userId",
+      "entryUrl",
+      (count(ld.*) filter (where "isLiked" = true))::integer likes,
+      (count(ld.*) filter (where "isDisliked" = true))::integer dislikes,
+      (count(ld.*) filter (where ld."userId" = 1 and "isLiked" = true))::integer "userLiked",
+      (count(ld.*) filter (where ld."userId" = 1 and "isDisliked" = true))::integer "userDisliked"
+    from "entries" e
+    left join "likesDislikes" ld using ("entryId")
+    group by "entryId";
   `;
   db.query(sql)
     .then(result => {
@@ -82,6 +88,33 @@ app.post('/api/entries', (req, res, next) => {
       });
     });
 
+});
+
+app.post('/api/likesDislikes/:entryId', (req, res, next) => {
+  const entryId = req.params.entryId;
+  const userId = 1;
+  const isLiked = req.body.isLiked;
+  const isDisliked = req.body.isDisliked;
+
+  const sql = `
+  insert into "likesDislikes" ("entryId", "userId", "isLiked", "isDisliked")
+    values ($1, $2, $3, $4)
+    on conflict ("userId", "entryId")
+    do update set "isLiked" = $3, "isDisliked" = $4
+    returning *
+  `;
+  const params = [entryId, userId, isLiked, isDisliked];
+  db.query(sql, params)
+    .then(result => {
+      const newEntry = result.rows[0];
+      res.status(201).json(newEntry);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
 });
 
 app.use(errorMiddleware);
