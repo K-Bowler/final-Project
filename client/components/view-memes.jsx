@@ -13,7 +13,6 @@ export default class MemesPage extends React.Component {
     this.nextImage = this.nextImage.bind(this);
     this.previousImage = this.previousImage.bind(this);
     this.handleLike = this.handleLike.bind(this);
-    // this.activateDislikeButton = this.activateDislikeButton.bind(this);
   }
 
   componentDidMount() {
@@ -156,16 +155,16 @@ export default class MemesPage extends React.Component {
                 <i className="fas fa-chevron-left light-grey arrow" onClick={this.previousImage}></i>
               </div>
               <div className='col-sixth row align-center justify-right'>
-                <img className='phone-like-dislike' src='/images/thumbs-up-empty.png' alt='thumbs up' />
+                  <img className='phone-like-dislike' onClick={() => this.handleLike(true, false)} src={`/images/${likeBtn}`} alt='thumbs up' />
               </div>
               <div className='col-sixth row align-center justify-center'>
-                <h1 className='like-dislike-count'>0</h1>
+                <h1 className='like-dislike-count'> {likes} </h1>
               </div>
               <div className='col-sixth row align-center justify-right'>
-                <img className='phone-like-dislike' src='/images/thumbs-down-empty.png' alt='thumbs down' />
+                  <img className='phone-like-dislike' onClick={() => this.handleLike(false, true)} src={`/images/${dislikeBtn}`} alt='thumbs down' />
               </div>
               <div className='col-sixth row align-center justify-center'>
-                <h1 className='like-dislike-count'>0</h1>
+                  <h1 className='like-dislike-count'> {dislikes} </h1>
               </div>
               <div className='col-sixth row justify-right'>
                 <i className="fas fa-chevron-right light-grey arrow" onClick={this.nextImage}></i>
