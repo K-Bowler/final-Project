@@ -63,17 +63,37 @@ export default class MemesPage extends React.Component {
     fetch(`/api/likesDislikes/${entryId}`, request)
       .then(res => res.json())
       .then(data => {
-        if (data.isLiked && !meme.userLiked) {
-          meme.likes++;
-          if (meme.userDisliked) {
-            meme.dislikes--;
+        if (data.userLiked) {
+          if (!meme.userLiked) {
+            meme.likes++;
+            if (meme.userDisliked) {
+              meme.dislikes--;
+            } else {
+              meme.likes--;
+            }
           }
-        } else if (data.isDisliked && !meme.userDisliked) {
-          meme.dislikes++;
+        } else if (data.userDisliked) {
           if (meme.userLiked) {
-            meme.likes--;
+            meme.dislikes++;
+            if (!meme.userLiked) {
+              meme.likes--;
+            } else {
+              meme.dislikes--;
+            }
           }
         }
+
+        // if (data.userLiked && !meme.userLiked) {
+        //   meme.likes++;
+        //   if (meme.userDisliked) {
+        //     meme.dislikes--;
+        //   }
+        // } else if (data.userDisliked && !meme.userDisliked) {
+        //   meme.dislikes++;
+        //   if (meme.userLiked) {
+        //     meme.likes--;
+        //   }
+        // }
         meme.userLiked = data.isLiked;
         meme.userDisliked = data.isDisliked;
 

@@ -60,54 +60,51 @@ app.get('/api/entries/:entryId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/entries', (req, res, next) => {
-  const userId = 1;
-  const entryUrl = req.body.entryUrl;
-
-  if (!entryUrl) {
-    res.status(400).json({
-      error: 'Missing \'entryUrl\' information.'
-    });
-  }
-
-  const sql = `
-  insert into "entries" ("entryUrl", "userId")
-    values ($1, $2)
-    returning *
-  `;
-  const params = [entryUrl, userId];
-  db.query(sql, params)
-    .then(result => {
-      const newEntry = result.rows[0];
-      res.status(201).json(newEntry);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'An unexpected error occurred.'
-      });
-    });
-
-});
-
 app.post('/api/likesDislikes/:entryId', (req, res, next) => {
   const entryId = req.params.entryId;
   const userId = 1;
-  const isLiked = req.body.isLiked;
-  const isDisliked = req.body.isDisliked;
+  let isLiked = req.body.isLiked;
+  let isDisliked = req.body.isDisliked;
 
-  const sql = `
-  insert into "likesDislikes" ("entryId", "userId", "isLiked", "isDisliked")
-    values ($1, $2, $3, $4)
-    on conflict ("userId", "entryId")
-    do update set "isLiked" = $3, "isDisliked" = $4
-    returning *
+  const selectSql = `
+    select
+      "isLiked",
+      "isDisliked"
+    from
+      "likesDislikes"
+    where
+      "userId" = $1 and "entryId" = $2
   `;
-  const params = [entryId, userId, isLiked, isDisliked];
-  db.query(sql, params)
-    .then(result => {
-      const newEntry = result.rows[0];
-      res.status(201).json(newEntry);
+  const selectParams = [userId, entryId];
+
+  db.query(selectSql, selectParams)
+    .then(selectResult => {
+      const [existingLikeInfo] = selectResult.rows;
+
+      if (existingLikeInfo) {
+        if (isLiked) {
+          isLiked = isLiked !== existingLikeInfo.isLiked;
+          isDisliked = false;
+        } else if (isDisliked) {
+          isLiked = false;
+          isDisliked = isDisliked !== existingLikeInfo.isDisliked;
+        }
+      }
+
+      const insertSql = `
+        insert into "likesDislikes" ("entryId", "userId", "isLiked", "isDisliked")
+          values ($1, $2, $3, $4)
+          on conflict ("userId", "entryId")
+          do update set "isLiked" = $3, "isDisliked" = $4
+        returning *
+      `;
+      const insertParams = [entryId, userId, isLiked, isDisliked];
+
+      return db.query(insertSql, insertParams)
+        .then(result => {
+          const newEntry = result.rows[0];
+          res.status(201).json(newEntry);
+        });
     })
     .catch(err => {
       console.error(err);
