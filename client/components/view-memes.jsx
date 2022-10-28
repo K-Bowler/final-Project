@@ -15,10 +15,14 @@ export default class MemesPage extends React.Component {
     this.handleLike = this.handleLike.bind(this);
   }
 
-  componentDidMount() {
+  getMemeData() {
     fetch('/api/entries')
       .then(response => response.json())
       .then(data => this.setState({ entries: data }));
+  }
+
+  componentDidMount() {
+    this.getMemeData();
   }
 
   nextImage() {
@@ -63,39 +67,20 @@ export default class MemesPage extends React.Component {
     fetch(`/api/likesDislikes/${entryId}`, request)
       .then(res => res.json())
       .then(data => {
-        if (data.userLiked) {
-          if (!meme.userLiked) {
-            meme.likes++;
-            if (meme.userDisliked) {
-              meme.dislikes--;
-            } else {
-              meme.likes--;
-            }
-          }
-        } else if (data.userDisliked) {
-          if (meme.userLiked) {
-            meme.dislikes++;
-            if (!meme.userLiked) {
-              meme.likes--;
-            } else {
-              meme.dislikes--;
-            }
-          }
+        if (meme.userLiked && !data.isLiked) {
+          meme.likes--;
+        } else if (!meme.userLiked && data.isLiked) {
+          meme.likes++;
         }
 
-        // if (data.userLiked && !meme.userLiked) {
-        //   meme.likes++;
-        //   if (meme.userDisliked) {
-        //     meme.dislikes--;
-        //   }
-        // } else if (data.userDisliked && !meme.userDisliked) {
-        //   meme.dislikes++;
-        //   if (meme.userLiked) {
-        //     meme.likes--;
-        //   }
-        // }
-        meme.userLiked = data.isLiked;
-        meme.userDisliked = data.isDisliked;
+        if (meme.userDisliked && !data.isDisliked) {
+          meme.dislikes--;
+        } else if (!meme.userDisliked && data.isDisliked) {
+          meme.dislikes++;
+        }
+
+        meme.userLiked = Number(data.isLiked);
+        meme.userDisliked = Number(data.isDisliked);
 
         const updatedEntries = entries.map(m => {
           if (m.entryId === data.entryId) {
