@@ -130,7 +130,7 @@ export default class MemesPage extends React.Component {
             </div>
           </div>
           <div className='col-full row justify-center'>
-            <div className='img-container'>
+            <div className='img-container' onDoubleClick={() => this.handleLike(true, false)}>
               <img className='meme-img' src={imageUrl} />
             </div>
           </div>
