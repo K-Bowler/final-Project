@@ -40,9 +40,26 @@ export default class NavBar extends React.Component {
 
   render() {
     let menuClass = '';
+    let createText = 'dark-grey no-decoration';
+    let menuText = 'light-grey no-decoration';
+    let profileText = 'dark-grey no-decoration';
 
     if (!this.state.menuOpen) {
       menuClass = 'phone-hidden';
+    }
+
+    if (this.props.path === '') {
+      menuText = 'light-grey no-decoration';
+      createText = 'dark-grey no-decoration';
+      profileText = 'dark-grey no-decoration';
+    } else if (this.props.path === 'create') {
+      menuText = 'dark-grey no-decoration';
+      createText = 'light-grey no-decoration';
+      profileText = 'dark-grey no-decoration';
+    } else if (this.props.path === 'profile') {
+      menuText = 'dark-grey no-decoration';
+      createText = 'dark-grey no-decoration';
+      profileText = 'light-grey no-decoration';
     }
 
     const menu = this.getMenu();
@@ -51,15 +68,15 @@ export default class NavBar extends React.Component {
     <div>
       <div className='row text-center justify-center align-center'>
         <div id='create' className='col-full-col-third phone-hidden'>
-          <h1> <a onClick={this.handleClick} className='light-grey no-decoration' href="#create"> CREATE </a></h1>
+          <h1> <a onClick={this.handleClick} className={createText} href="#create"> CREATE </a></h1>
           <i onClick={this.handleClick} className="fas fa-chevron-down light-grey nav-arrow desktop-hidden"></i>
         </div>
         <div id='memes' className='col-full-col-third row justify-center align-center phone-hidden'>
-          <h1> <a onClick={this.handleClick} className='light-grey no-decoration' href="#"> MEMES </a></h1>
+          <h1> <a onClick={this.handleClick} className={menuText} href="#"> MEMES </a></h1>
           <i onClick={this.handleClick} className="fas fa-chevron-down light-grey nav-arrow desktop-hidden"></i>
         </div>
         <div id='profile' className='col-full-col-third phone-hidden align-center'>
-          <h1> <a onClick={this.handleClick} className='light-grey no-decoration' href="#profile"> PROFILE </a></h1>
+          <h1> <a onClick={this.handleClick} className={profileText} href="#profile"> PROFILE </a></h1>
           <i onClick={this.handleClick} className="fas fa-chevron-down light-grey nav-arrow desktop-hidden"></i>
         </div>
         <div id='memes' className='col-full-col-third row justify-center align-center desktop-hidden'>

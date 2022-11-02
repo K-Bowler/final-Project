@@ -114,6 +114,11 @@ export default class PostMemes extends React.Component {
                 </div>
               </div>
             </div>
+            <div className='col-third phone-hidden'>
+              <div className='col-full row justify-center'>
+                <button type='button' className='edit-entry-btns edit-entry-top-btn-margin'>EDIT</button>
+              </div>
+            </div>
           </div>
         </form>
       </div>
