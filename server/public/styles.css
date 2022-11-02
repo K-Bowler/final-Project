@@ -53,7 +53,11 @@
 
 .like-dislike {
   width: 40px;
-  margin: 0 20px 0 60px;
+  margin: 0 20px 0 50px;
+}
+
+.like-dislike:hover {
+  cursor: pointer;
 }
 
 .like-dislike-count {
@@ -68,6 +72,10 @@
 .arrow {
   font-size: 40px;
   margin: 10px 0 0;
+}
+
+.arrow:hover {
+  cursor: pointer;
 }
 
 .hamberger-background {
