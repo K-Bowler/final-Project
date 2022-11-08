@@ -3,6 +3,7 @@ import parseRoute from './lib/parse-route';
 import NavBar from './components/nav-bar';
 import ViewMemes from './pages/view-memes-page';
 import PostMemesPage from './pages/post-memes-page';
+import EditPosts from './components/edit-posts';
 
 export default class App extends React.Component {
   constructor(props) {
